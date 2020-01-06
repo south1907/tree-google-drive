@@ -6,11 +6,10 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 import json
 import os
-import glob
 
 # If modifying these scopes, delete the file token.pickle.
 SCOPES = ['https://www.googleapis.com/auth/drive']
-limit_loop = 5
+limit_request = 500
 def getFolder(service, folder_id="root"):
 	
 	print(folder_id)
@@ -56,7 +55,8 @@ def main():
 
 	service = build('drive', 'v3', credentials=creds)
 
-	root = '1ywh1sPz_tv35htokvaHb-pS7-k8lXZbf'
+	with open('folder.txt', 'r') as f:
+		root = f.read()
 
 	root_path = 'data/' + root
 	
@@ -81,17 +81,14 @@ def main():
 		print('empty')
 		queue_folder = [root]
 
-	print(queue_folder)
 	count = 0
-	while len(queue_folder) > 0 or count > 500:
+	while len(queue_folder) > 0 or count > limit_request:
 		new_queue_folder = []
 		for folder_id in queue_folder:
 			count += 1
 			print(count)
 			items = getFolder(service, folder_id)
 			for item in items:
-				print(item)
-				print(item['mimeType'])
 				if item['mimeType'] == 'application/vnd.google-apps.folder':
 					new_queue_folder.append(item['id'])
 			data_file = {
@@ -103,7 +100,7 @@ def main():
 			with open(root_path + '/' + folder_id +'.json', 'w') as outfile:
 				json.dump(data_file, outfile, indent=4, ensure_ascii=False)
 
-		print(new_queue_folder)
+		# print(new_queue_folder)
 		queue_folder = new_queue_folder
 	
 	print("Count: " + str(count))
