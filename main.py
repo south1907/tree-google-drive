@@ -86,7 +86,7 @@ def main():
 		queue_folder = [root]
 
 	count = 0
-	while len(queue_folder) > 0 or count > limit_request:
+	while len(queue_folder) > 0 and count > limit_request:
 		new_queue_folder = []
 		for folder_id in queue_folder:
 			count += 1
