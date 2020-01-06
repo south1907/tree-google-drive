@@ -15,9 +15,11 @@ def getFolder(service, folder_id="root"):
 	print(folder_id)
 	results = []
 	page_token = None
-
-	while True:
+	limit_page = 20
+	count = 0
+	while count < limit_page:
 		# Call the Drive v3 API
+		count += 1
 		response = service.files().list(q="'"+ folder_id +"' in parents").execute()
 
 		page_token = response.get('nextPageToken', None)
