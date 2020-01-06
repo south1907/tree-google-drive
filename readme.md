@@ -12,4 +12,4 @@ or go https://developers.google.com/drive/api/v3/quickstart/python, enable the D
 3. run file main.py
 	- because folder may be have many many subfolder, so tool will run many times (limit 500 request, set crontab)
 
-4. 
+4. run file generate.py to generate file menu json in folder output

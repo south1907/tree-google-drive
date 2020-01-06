@@ -32,6 +32,8 @@ def getFolder(service, folder_id="root"):
 		if page_token is None:
 			break
 
+		print('next page')
+
 	return results
 
 def main():
