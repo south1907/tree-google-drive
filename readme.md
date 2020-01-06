@@ -7,6 +7,9 @@ results = service.files().list(pageSize=2, driveId='1VvMyjU_VeOqPueEsj9Rcrk1ll43
 ### Setup
 
 1. go https://console.developers.google.com/apis/credentials, create and download file credentials.json
-or go https://developers.google.com/drive/api/v3/quickstart/python, enable the Drive API, download file credentials.json
+or go https://developers.google.com/drive/api/v3/quickstart/python, enable the Drive API, download file credentials.jsont
 2. copy file folder.txt from file folder.example.txt --> edit id of folder need run
 3. run file main.py
+	- because folder may be have many many subfolder, so tool will run many times (limit 500 request, set crontab)
+
+4. 

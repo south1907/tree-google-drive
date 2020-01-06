@@ -1,4 +1,5 @@
 token.pickle
 credentials.json
 data/*/*
+output/*.json
 folder.txt
