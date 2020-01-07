@@ -7,6 +7,7 @@ from google.auth.transport.requests import Request
 import json
 import os
 
+root_os = os.path.dirname(os.path.abspath(__file__)) + '/'
 # If modifying these scopes, delete the file token.pickle.
 SCOPES = ['https://www.googleapis.com/auth/drive']
 limit_request = 500
@@ -42,27 +43,27 @@ def main():
 
 	creds = None
 
-	if os.path.exists('token.pickle'):
-		with open('token.pickle', 'rb') as token:
+	if os.path.exists(root_os + 'token.pickle'):
+		with open(root_os + 'token.pickle', 'rb') as token:
 			creds = pickle.load(token)
 	# If there are no (valid) credentials available, let the user log in.
 	if not creds or not creds.valid:
 		if creds and creds.expired and creds.refresh_token:
 			creds.refresh(Request())
 		else:
-			flow = InstalledAppFlow.from_client_secrets_file(
+			flow = InstalledAppFlow.from_client_secrets_file(root_os + 
 				'credentials.json', SCOPES)
 			creds = flow.run_local_server(port=0)
 		# Save the credentials for the next run
-		with open('token.pickle', 'wb') as token:
+		with open(root_os + 'token.pickle', 'wb') as token:
 			pickle.dump(creds, token)
 
 	service = build('drive', 'v3', credentials=creds)
 
-	with open('folder.txt', 'r') as f:
+	with open(root_os + 'folder.txt', 'r') as f:
 		root = f.read()
 
-	root_path = 'data/' + root
+	root_path = root_os + 'data/' + root
 	
 	all_data = {}
 	if os.path.isdir(root_path):
@@ -86,7 +87,7 @@ def main():
 		queue_folder = [root]
 
 	count = 0
-	while len(queue_folder) > 0 and count > limit_request:
+	while len(queue_folder) > 0 and count < limit_request:
 		new_queue_folder = []
 		for folder_id in queue_folder:
 			count += 1
