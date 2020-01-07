@@ -69,7 +69,7 @@ def main():
 	if os.path.isdir(root_path):
 		files = os.listdir(root_path)
 		for file in files:
-			with open(root_path + '/' + file, 'r') as f:
+			with open(root_path + '/' + file, 'r', encoding="utf-8") as f:
 				data = json.loads(f.read())['data']
 
 				all_data[file.split('.')[0]] = data
@@ -102,7 +102,7 @@ def main():
 
 			if not os.path.isdir(root_path):
 				os.mkdir(root_path)
-			with open(root_path + '/' + folder_id +'.json', 'w') as outfile:
+			with open(root_path + '/' + folder_id +'.json', 'w', encoding="utf-8") as outfile:
 				json.dump(data_file, outfile, indent=4, ensure_ascii=False)
 
 		# print(new_queue_folder)
