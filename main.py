@@ -30,7 +30,8 @@ def getFolder(service, folder_id="root"):
 			break
 		else:
 			for item in items:
-				results.append(item)
+				if item not in results:
+					results.append(item)
 
 		if page_token is None:
 			break

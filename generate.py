@@ -1,5 +1,8 @@
 import os
 import json
+import time
+
+start_time = time.time()
 
 with open('folder.txt', 'r') as f:
 	folder_id = f.read()
@@ -15,20 +18,33 @@ if os.path.isdir(root_path):
 
 			all_data[file.split('.')[0]] = data
 
+checked = []
+
 def generateFolder(data, folder_id):
 	result = []
 
+	checked.append(folder_id)
+	print(len(checked))
 	if folder_id in data:
 		items = data[folder_id]
 
 		for item in items:
 			if item['mimeType'] == 'application/vnd.google-apps.folder':
-				item['children'] = generateFolder(data, item['id'])
+				if item['id'] not in checked:
+					item['children'] = generateFolder(data, item['id'])
+				else:
+					print('da duyet roi, co the bi lap')
+					print(folder_id)
 
 			result.append(item)
 
 	return result
 
 final = generateFolder(all_data, folder_id)
+
+end_time = time.time()
+print('total time: ')
+print(end_time - start_time);
+
 with open('output/' + folder_id +'.json', 'w') as outfile:
 	json.dump(final, outfile, indent=4, ensure_ascii=False)
