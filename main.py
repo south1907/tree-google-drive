@@ -21,22 +21,26 @@ def getFolder(service, folder_id="root"):
 	while count < limit_page:
 		# Call the Drive v3 API
 		count += 1
-		response = service.files().list(q="'"+ folder_id +"' in parents").execute()
+		try:
+			response = service.files().list(q="'"+ folder_id +"' in parents").execute()
 
-		page_token = response.get('nextPageToken', None)
-		items = response.get('files', [])
+			page_token = response.get('nextPageToken', None)
+			items = response.get('files', [])
 
-		if not items:
-			break
-		else:
-			for item in items:
-				if item not in results:
-					results.append(item)
+			if not items:
+				break
+			else:
+				for item in items:
+					if item not in results:
+						results.append(item)
 
-		if page_token is None:
-			break
+			if page_token is None:
+				break
 
-		print('next page')
+			print('next page')
+		except Exception as e:
+			print('loi roi')
+		
 
 	return results
 
