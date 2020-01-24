@@ -110,6 +110,9 @@ def main():
 			with open(root_path + '/' + folder_id +'.json', 'w', encoding="utf-8") as outfile:
 				json.dump(data_file, outfile, indent=4, ensure_ascii=False)
 
+			if count > limit_request:
+				break
+
 		# print(new_queue_folder)
 		queue_folder = new_queue_folder
 	
