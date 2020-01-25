@@ -6,6 +6,7 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 import json
 import os
+import sys, traceback
 
 root_os = os.path.dirname(os.path.abspath(__file__)) + '/'
 # If modifying these scopes, delete the file token.pickle.
@@ -39,6 +40,7 @@ def getFolder(service, folder_id="root"):
 
 			print('next page')
 		except Exception as e:
+			traceback.print_exc(file=sys.stdout)
 			print('loi roi')
 		
 
@@ -66,7 +68,7 @@ def main():
 	service = build('drive', 'v3', credentials=creds)
 
 	with open(root_os + 'folder.txt', 'r') as f:
-		root = f.read()
+		root = f.read().strip()
 
 	root_path = root_os + 'data/' + root
 	
