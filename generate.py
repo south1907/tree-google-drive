@@ -5,7 +5,7 @@ import time
 start_time = time.time()
 
 with open('folder.txt', 'r') as f:
-	folder_id = f.read()
+	folder_id = f.read().strip()
 
 root_path = 'data/' + folder_id
 	
